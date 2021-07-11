@@ -6,9 +6,12 @@ import com.codeborne.selenide.Selectors;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 
 import java.io.File;
+import java.security.Key;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byClassName;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
@@ -23,28 +26,24 @@ public class PracticeFormTest {
     @Test
     void positiveFillTest(){
         open("/automation-practice-form");
+        String eMail = "SBorisoglebsky@gmail.com";
+        String phoneNumber ="9165556677";
+
         $("#firstName").setValue("Serega");
         $("#lastName").setValue("Borisoglebsky");
-        $("#userEmail").setValue("SBorisoglebsky@gmail.com");
+        $("#userEmail").setValue(eMail);
 
-       // $("input[id=gender-radio-1]").setSelected(true);
-       // $x("//input[@id='gender-radio-1']").isEnabled();
         $(byText("Male")).click();
-        //.custom-radio:nth-child(3)>.custom-control-label
+        $("#userNumber").setValue(phoneNumber);
 
-        $("#userNumber").setValue("123456789");
-       // $("#dateOfBirthInput").setValue("30 Jan 1976");
-        //.react-datepicker__month-container.selectOptions("April");
+        //BirthDay
+        $("#dateOfBirthInput").click();
+        $(".react-datepicker__month-select").selectOption("January");
+        $(".react-datepicker__year-select").selectOption("1976");
+        $(".react-datepicker__day--010").click();
 
-
-        $("#subjectsContainer").click();
-
-        var sub = $("#subjectsContainer").getValue();
-        System.out.println("var = "+sub);
-
-        $("#subjectsInput").setValue("QA.GURU");
-        //$("#subjectsContainer:nth-child(2)").setValue("QA.GURU");
-
+        //Subject
+        $("#subjectsInput").setValue("Hindi").pressEnter();
         $(byText("Music")).click();
 
         String dir = System.getProperty("user.dir");
@@ -53,21 +52,26 @@ public class PracticeFormTest {
         $("#uploadPicture").uploadFile(new File("README.md"));
         $("#currentAddress").setValue("Moscow, Lenina street 2");
 
-        String l = $("#stateCity-label").getText();
-        System.out.println("label  = "+l);
+        $("#submit").scrollIntoView(false);
 
-        $("#state").scrollIntoView(false);
+        $("#react-select-3-input").setValue("Haryana").pressEnter();
+        $("#react-select-4-input").setValue("Karnal").pressEnter();
 
-        $("#state > div").exists();
-        //#state > div > div.css-1hwfws3
+        $("#submit").scrollTo().click();
 
-                //.setValue("Haryana");
-        //#stateCity-label
+        $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
 
-
-        $("#lastName").setValue("Borisoglebsky");
+        $("tbody").$(byText("Student Name")).parent().shouldHave(text("Serega Borisoglebsky"));
+        $("tbody").$(byText("Student Email")).parent().shouldHave(text(eMail));
+        $("tbody").$(byText("Gender")).parent().shouldHave(text("Male"));
+        $("tbody").$(byText("Mobile")).parent().shouldHave(text(phoneNumber));
+        $("tbody").$(byText("Date of Birth")).parent().shouldHave(text("10 January,1976"));
+        $("tbody").$(byText("Subjects")).parent().shouldHave(text("Hindi"));
+        $("tbody").$(byText("Hobbies")).parent().shouldHave(text("Music"));
+        $("tbody").$(byText("Picture")).parent().shouldHave(text("README.md"));
+        $("tbody").$(byText("Address")).parent().shouldHave(text("Moscow, Lenina street 2"));
+        $("tbody").$(byText("State and City")).parent().shouldHave(text("Haryana Karnal"));
 
     }
-
 
 }

@@ -33,26 +33,21 @@ public class PracticeFormTest {
         $("#lastName").setValue("Borisoglebsky");
         $("#userEmail").setValue(eMail);
 
-        $(byText("Male")).click();
+        $("#genterWrapper").$(byText("Male")).click();
         $("#userNumber").setValue(phoneNumber);
 
         //BirthDay
         $("#dateOfBirthInput").click();
         $(".react-datepicker__month-select").selectOption("January");
         $(".react-datepicker__year-select").selectOption("1976");
-        $(".react-datepicker__day--010").click();
+        $(".react-datepicker__day--030:not(.react-datepicker__day--outside-month)").click();
 
         //Subject
         $("#subjectsInput").setValue("Hindi").pressEnter();
-        $(byText("Music")).click();
+        $("#hobbiesWrapper").$(byText("Music")).click();
 
-        String dir = System.getProperty("user.dir");
-        System.out.println("var = "+dir);
-
-        $("#uploadPicture").uploadFile(new File("README.md"));
+        $("#uploadPicture").uploadFile(new File("img/guru.PNG"));
         $("#currentAddress").setValue("Moscow, Lenina street 2");
-
-        $("#submit").scrollIntoView(false);
 
         $("#react-select-3-input").setValue("Haryana").pressEnter();
         $("#react-select-4-input").setValue("Karnal").pressEnter();
@@ -65,10 +60,10 @@ public class PracticeFormTest {
         $("tbody").$(byText("Student Email")).parent().shouldHave(text(eMail));
         $("tbody").$(byText("Gender")).parent().shouldHave(text("Male"));
         $("tbody").$(byText("Mobile")).parent().shouldHave(text(phoneNumber));
-        $("tbody").$(byText("Date of Birth")).parent().shouldHave(text("10 January,1976"));
+        $("tbody").$(byText("Date of Birth")).parent().shouldHave(text("30 January,1976"));
         $("tbody").$(byText("Subjects")).parent().shouldHave(text("Hindi"));
         $("tbody").$(byText("Hobbies")).parent().shouldHave(text("Music"));
-        $("tbody").$(byText("Picture")).parent().shouldHave(text("README.md"));
+        $("tbody").$(byText("Picture")).parent().shouldHave(text("guru.PNG"));
         $("tbody").$(byText("Address")).parent().shouldHave(text("Moscow, Lenina street 2"));
         $("tbody").$(byText("State and City")).parent().shouldHave(text("Haryana Karnal"));
 

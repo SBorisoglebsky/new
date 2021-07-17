@@ -1,20 +1,15 @@
 package guru.ga.tests;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selectors;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 
 import java.io.File;
-import java.security.Key;
 
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selectors.byClassName;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
 
 public class PracticeFormTest {
     @BeforeAll
@@ -46,7 +41,8 @@ public class PracticeFormTest {
         $("#subjectsInput").setValue("Hindi").pressEnter();
         $("#hobbiesWrapper").$(byText("Music")).click();
 
-        $("#uploadPicture").uploadFile(new File("img/guru.PNG"));
+
+        $("#uploadPicture").uploadFile(new File("src/test/resources/guru.PNG"));
         $("#currentAddress").setValue("Moscow, Lenina street 2");
 
         $("#react-select-3-input").setValue("Haryana").pressEnter();
